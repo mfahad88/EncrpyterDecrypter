@@ -17,12 +17,12 @@ fun main() {
         print("Enter Encrypted String: ")
         val decString = readln()
         println("Encrypted String: ${encryptString(decString)}")
-        println("SHA256: ${getSHA512(encryptString(decString)!!)}")
+        println("SHA512: ${getSHA512(encryptString(decString)!!)}")
     } else if (selection == 2) {
         print("Enter Decrypted String: ")
         val decString = readln()
         println("Decrypted String: ${decryptString(decString)}")
-        println("SHA256: ${getSHA512(decString)}")
+        println("SHA512: ${getSHA512(decString)}")
     }
 }
 fun decryptString(encryptedString:String): String {
