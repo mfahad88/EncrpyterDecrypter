@@ -11,27 +11,32 @@ import java.util.Base64
 
 fun main() {
 //    println("Encrypted String: ${encryptString("Now it is okey!")}")
+    print("Please enter Encryption/Decryption key: ")
+    val encryptionKey= if(readln().isEmpty()){
+        "tstymzmjklgiubvx%8\$#9*&*5):?><:p"
+    }else{
+        readln()
+    }
     print("Press 1 for Encryption and Press 2 for Decryption: ")
     val selection = readln().toInt()
     if (selection == 1) {
         print("Enter Encrypted String: ")
         val decString = readln()
-        println("Encrypted String: ${encryptString(decString)}")
-        println("SHA512: ${getSHA512(encryptString(decString)!!)}")
+        println("Encrypted String: ${encryptString(decString,encryptionKey)}")
+        println("SHA512: ${getSHA512(encryptString(decString, encryptionKey)!!,encryptionKey)}")
     } else if (selection == 2) {
         print("Enter Decrypted String: ")
         val decString = readln()
-        println("Decrypted String: ${decryptString(decString)}")
-        println("SHA512: ${getSHA512(decString)}")
+        println("Decrypted String: ${decryptString(decString,encryptionKey)}")
+        println("SHA512: ${getSHA512(decString,encryptionKey)}")
     }
 }
-fun decryptString(encryptedString:String): String {
+fun decryptString(encryptedString: String, encryptionKey: String): String {
     // Parameters
     val algorithmNonceSize = 12
     val algorithmKeySize = 32
     val PBKDF2SaltSize = 16
     val PBKDF2Iterations = 26834
-    val encryptionKey = "tstymzmjklgiubvx%8\$#9*&*5):?><:p"
     val encryptedString = encryptedString
 
     // Decode the encrypted string from base64
@@ -60,13 +65,12 @@ fun decryptString(encryptedString:String): String {
 
 }
 
-fun encryptString(text:String): String? {
+fun encryptString(text: String, encryptionKey: String): String? {
     // Parameters
     val algorithmNonceSize = 12
     val algorithmKeySize = 32
     val PBKDF2SaltSize = 16
     val PBKDF2Iterations = 26834
-    val encryptionKey = "tstymzmjklgiubvx%8$#9*&*5):?><:p"
     val plaintext = text
 
     // Generate random nonce
@@ -100,7 +104,7 @@ fun encryptString(text:String): String? {
     return base64Encoded
 }
 
-fun getSHA512(input:String):String{
+fun getSHA512(input: String, encryptionKey: String):String{
     val md: MessageDigest = MessageDigest.getInstance("SHA-512")
     val messageDigest = md.digest(input.toByteArray())
 
